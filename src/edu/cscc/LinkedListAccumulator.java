@@ -13,7 +13,7 @@ public class LinkedListAccumulator {
      * @param startingValue Value to initialize the linked list with.
      */
     public LinkedListAccumulator(Integer startingValue) {
-
+        head = new Node<>(startingValue);
     }
 
     /**
@@ -33,7 +33,13 @@ public class LinkedListAccumulator {
      * @param value The value to be appended as a node at the end of the linked list.
      */
     public void addValue(Integer value) {
+        Node<Integer> currentNode = head;
+        while (currentNode.getNext() != null) {
+            currentNode = currentNode.getNext();
+        }
 
+        Node<Integer> newNode = new Node<>(value);
+        currentNode.setNext(newNode);
     }
 
     /**
@@ -43,7 +49,14 @@ public class LinkedListAccumulator {
      * @return The total value of all of the integers in the list.
      */
     public int sum() {
-        return -1;
+        return sum(0, head);
     }
 
+    private int sum(int runningTotal, Node<Integer> node) {
+        if (node.getNext() == null) {
+            return runningTotal + node.getData();
+        }
+
+        return sum(runningTotal + node.getData(), node.getNext());
+    }
 }
